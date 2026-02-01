@@ -97,7 +97,7 @@ print("\n")
 
 def mostrar_información_de(**kwargs):
     for clave, valor in kwargs.items():
-        print(f"{clave}: {valor}") #No le importa cuáles claves lleguen, no falla por claves faltantes, muestra todo lo que llegue
+        print(f"{clave}: {valor}") # no le importa cuáles claves lleguen, no falla por claves faltantes, muestra todo lo que llegue
 
 mostrar_información_de(nombre="Lau", edad=21, carrera="Ingeniería")
 mostrar_información_de(nombre="Lau", edad=21, country="Colombia")

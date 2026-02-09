@@ -145,47 +145,75 @@ except requests.exceptions.RequestException as e:
 # call_grok(GROK_API_KEY, "Hazme un poema sobre la programación")
 
 # API DE GROQ
-import json
-print("\nAPI DE GROQ")
+# import json
+# print("\nAPI DE GROQ")
 
-GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
+# GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 
-def call_groq(api_key, prompt):
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }
+# def call_groq(api_key, prompt):
+#     url = "https://api.groq.com/openai/v1/chat/completions"
+#     headers = {
+#         "Content-Type": "application/json",
+#         "Authorization": f"Bearer {api_key}"
+#     }
 
-    data = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [{"role": "user", "content": prompt}]
-    }
+#     data = {
+#         "model": "llama-3.3-70b-versatile",
+#         "messages": [{"role": "user", "content": prompt}]
+#     }
 
-    response = requests.post(url, json=data, headers=headers)
-    return response.json()
+#     response = requests.post(url, json=data, headers=headers)
+#     return response.json()
 
 
-api_response = call_groq(GROQ_API_KEY, "Hazme un poema corto sobre la programación")
-print(json.dumps(api_response, indent=2)) # crear una cadena de texto a través del json con identación
-print(api_response["choices"][0]["message"]["content"])
+# api_response = call_groq(GROQ_API_KEY, "Hazme un poema corto sobre la programación")
+# # print(json.dumps(api_response, indent=2)) # crear una cadena de texto a través del json con identación
+# print(api_response["choices"][0]["message"]["content"])
 
 
 # CON LIBRERÍA DE OPEN AI (mucho mas fácil)
 
+from openai import OpenAI
+
+def call_openai_groq(prompt):
+    client = OpenAI(
+        api_key=os.environ.get('GROQ_API_KEY'), 
+        base_url="https://api.groq.com/openai/v1"
+    )
+
+    response = client.responses.create(
+        input=prompt,
+        model="openai/gpt-oss-20b",
+    )
+
+    print(response.output_text)
+
+call_openai_groq("Dame un poema corto para dedicar a mi pareja")
+
+
+# API DEEPSEEK
+
+# print("\nAPI DE DEEPSEEK")
 # from openai import OpenAI
+# import os
 
-# def call_openai_groq(prompt):
-#     client = OpenAI(
-#         api_key=os.environ.get('GROQ_API_KEY'), 
-#         base_url="https://api.groq.com/openai/v1"
-#     )
+# DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY')
 
-#     response = client.responses.create(
-#         input=prompt,
-#         model="openai/gpt-oss-20b",
-#     )
+# def call_deepseek(api_key, prompt):
+#     url = "https://api.deepseek.com/chat/completions"
 
-#     print(response.output_text)
+#     headers = {
+#         "Content-Type": "application/json",
+#         "Authorization": f"Bearer {api_key}"
+#     }
 
-# call_openai_groq("Dame un poema corto para dedicar a mi pareja")
+#     data = {
+#         "model": "deepseek-chat", 
+#         "messages": [{"role": "user", "content": prompt}]
+#     }
+
+#     response = requests.post(url, json=data, headers=headers)
+#     print(response.json())
+
+# call_deepseek(DEEPSEEK_API_KEY, "Escribe un poema sobre la programación")
+
